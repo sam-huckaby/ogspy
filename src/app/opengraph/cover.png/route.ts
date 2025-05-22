@@ -20,7 +20,6 @@ export async function GET(request: NextRequest) {
   const ip = typeof (request as { ip?: string }).ip === 'string' ? (request as { ip?: string }).ip! : 'Unknown';
 
   const searchParams = request.nextUrl.searchParams;
-  const testParam = searchParams.get('test');
   console.log("================================================");
   console.log("User-Agent:", userAgent);
   console.log("IP:", ip);
