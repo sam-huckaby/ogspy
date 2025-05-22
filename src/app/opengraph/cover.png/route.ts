@@ -25,7 +25,7 @@ export async function GET(request: NextRequest) {
   console.log("User-Agent:", userAgent);
   console.log("IP:", ip);
   console.log("Headers:", headersObj);
-  console.log("Test Query Param:", testParam);
+  console.log("Search Params:", searchParams);
   console.log("================================================");
 
   return new ImageResponse(
