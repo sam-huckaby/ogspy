@@ -4,38 +4,38 @@ import React from 'react';
 export const runtime = 'edge';
 
 export async function GET(request: Request) {
-  // Log as much info as possible about the browser/request
-  if (request) {
-    // Log the user-agent and all headers
-    const userAgent = request.headers.get('user-agent');
-    console.log('User-Agent:', userAgent);
-
-    // Log all headers
-    const headersObj: Record<string, string> = {};
-    for (const [key, value] of request.headers.entries()) {
-      headersObj[key] = value;
-    }
-    console.log('Request Headers:', headersObj);
-
-    // Log IP if available (not always available in edge runtime)
-    // @ts-ignore
-    if (request.ip) {
-      // @ts-ignore
-      console.log('Request IP:', request.ip);
-    }
+  // Get request information
+  const userAgent = request.headers.get('user-agent') || 'Unknown';
+  const headersObj: Record<string, string> = {};
+  for (const [key, value] of request.headers.entries()) {
+    headersObj[key] = value;
   }
+  const ip = (request as any).ip || 'Unknown';
 
   return new ImageResponse(
     React.createElement('div', {
       style: {
-        width: '25px',
-        height: '25px',
+        width: '600px',
+        height: '400px',
         backgroundColor: 'red',
+        color: 'white',
+        padding: '20px',
+        fontFamily: 'monospace',
+        fontSize: '14px',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '10px',
       }
-    }),
+    }, [
+      React.createElement('div', { key: 'ua' }, `User-Agent: ${userAgent}`),
+      React.createElement('div', { key: 'ip' }, `IP: ${ip}`),
+      React.createElement('div', { key: 'headers' }, 
+        `Headers: ${JSON.stringify(headersObj, null, 2)}`
+      ),
+    ]),
     {
-      width: 25,
-      height: 25,
+      width: 600,
+      height: 400,
     }
   );
 } 
