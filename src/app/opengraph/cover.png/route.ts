@@ -1,19 +1,25 @@
 import { ImageResponse } from 'next/og';
+import { type NextRequest } from 'next/server'
+import { headers } from 'next/headers';
 import React from 'react';
 
 export const runtime = 'edge';
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   // Get request information
-  const userAgent = request.headers.get('user-agent') || 'Unknown';
+
+  const headersList = await headers()
+  const userAgent = headersList.get('user-agent') || 'Unknown';
+  // I need to decide exactly which headers I care to grab
   const headersObj: Record<string, string> = {};
-  for (const [key, value] of request.headers.entries()) {
+  for (const [key, value] of headersList.entries()) {
     headersObj[key] = value;
   }
+
   // TypeScript's Request type does not include 'ip', so we safely access it if present
   const ip = typeof (request as { ip?: string }).ip === 'string' ? (request as { ip?: string }).ip! : 'Unknown';
 
-  const { searchParams } = new URL(request.url);
+  const searchParams = request.nextUrl.searchParams;
   const testParam = searchParams.get('test');
   console.log("================================================");
   console.log("User-Agent:", userAgent);
