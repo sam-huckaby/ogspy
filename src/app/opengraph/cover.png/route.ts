@@ -10,7 +10,14 @@ export async function GET(request: Request) {
   for (const [key, value] of request.headers.entries()) {
     headersObj[key] = value;
   }
-  const ip = (request as any).ip || 'Unknown';
+  // TypeScript's Request type does not include 'ip', so we safely access it if present
+  const ip = typeof (request as { ip?: string }).ip === 'string' ? (request as { ip?: string }).ip! : 'Unknown';
+
+  console.log("================================================");
+  console.log("User-Agent:", userAgent);
+  console.log("IP:", ip);
+  console.log("Headers:", headersObj);
+  console.log("================================================");
 
   return new ImageResponse(
     React.createElement('div', {
