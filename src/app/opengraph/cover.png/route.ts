@@ -13,17 +13,20 @@ export async function GET(request: Request) {
   // TypeScript's Request type does not include 'ip', so we safely access it if present
   const ip = typeof (request as { ip?: string }).ip === 'string' ? (request as { ip?: string }).ip! : 'Unknown';
 
+  const { searchParams } = new URL(request.url);
+  const testParam = searchParams.get('test');
   console.log("================================================");
   console.log("User-Agent:", userAgent);
   console.log("IP:", ip);
   console.log("Headers:", headersObj);
+  console.log("Test Query Param:", testParam);
   console.log("================================================");
 
   return new ImageResponse(
     React.createElement('div', {
       style: {
-        width: '600px',
-        height: '400px',
+        width: '1200px',
+        height: '630px',
         backgroundColor: 'red',
         color: 'white',
         padding: '20px',
@@ -41,8 +44,8 @@ export async function GET(request: Request) {
       ),
     ]),
     {
-      width: 600,
-      height: 400,
+      width: 1200,
+      height: 630,
     }
   );
 } 

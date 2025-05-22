@@ -12,7 +12,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: '/opengraph/cover.png',
+        url: '/opengraph/cover.png?user=test',
         width: 25,
         height: 25,
         alt: 'Dynamic OpenGraph Image',
